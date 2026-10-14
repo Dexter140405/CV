@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hoàng Tiến Đạt | Intern .NET Developer</title>
+
+  <!-- ===== Google Fonts ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- ===== Devicons (skill icons) ===== -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
+  />
+
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES — chỉnh màu & thông số tại đây
+    ============================================================ */
+    :root {
+      --bg-primary:   #111111;   /* Nền chính */
+      --bg-secondary: #1a1a1a;   /* Nền thứ cấp (card, section xen kẽ) */
+      --bg-card:      #1e1e1e;   /* Nền card */
+      --accent:       #00d4aa;   /* Màu điểm nhấn — xanh ngọc */
+      --accent-dim:   #00b38f;   /* Accent tối hơn (hover) */
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0a0a0;
+      --border:       #2a2a2a;
+      --radius:       12px;
+      --radius-sm:    6px;
+      --shadow:       0 4px 24px rgba(0, 212, 170, 0.08);
+      --transition:   0.3s ease;
+      --header-h:     70px;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--accent-dim); }
+
+    img { max-width: 100%; display: block; }
+
+    section { padding: 100px 0; }
+
+    .container {
+      width: min(1200px, 92%);
+      margin-inline: auto;
+    }
+
+    /* ============================================================
+       SCROLL REVEAL ANIMATION — thêm class .reveal vào element
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       TYPOGRAPHY HELPERS
+    ============================================================ */
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-title span { color: var(--accent); }
+
+    .section-desc {
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin-bottom: 56px;
+    }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #111;
+    }
+    .btn-primary:hover {
+      background: var(--accent-dim);
+      color: #111;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 212, 170, 0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 212, 170, 0.15);
+    }
+
+    /* ============================================================
+       STICKY HEADER / NAVIGATION
+    ============================================================ */
+    #header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-h);
+      z-index: 1000;
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    /* Khi scroll xuống, thêm border và tối hơn */
+    #header.scrolled {
+      border-color: var(--border);
+      background: rgba(17, 17, 17, 0.96);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    /* Logo / Tên */
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    /* Menu links */
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      position: relative;
+      padding-bottom: 4px;
+      transition: color var(--transition);
+    }
+
+    /* Gạch chân animation */
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    /* Mobile hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    /* Mobile menu mở */
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Header Controls (Language switch + Mobile toggle) */
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Language Switcher pill */
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 3px 5px;
+      gap: 2px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .lang-switch:hover {
+      border-color: rgba(0, 212, 170, 0.45);
+      box-shadow: 0 0 12px rgba(0, 212, 170, 0.15);
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all var(--transition);
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    .lang-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #111;
+      box-shadow: 0 2px 10px rgba(0, 212, 170, 0.4);
+    }
+
+    .lang-divider {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.72rem;
+      user-select: none;
+    }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--header-h);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Lưới nền trang trí */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,170,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,170,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* Vầng sáng xanh ngọc góc trên phải */
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,212,170,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(0, 212, 170, 0.1);
+      border: 1px solid rgba(0, 212, 170, 0.25);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,170,0.6); }
+      50%       { box-shadow: 0 0 0 6px rgba(0,212,170,0); }
+    }
+
+    .hero-name {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-name .accent-text { color: var(--accent); }
+
+    .hero-role {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin: 12px 0 18px;
+    }
+
+    .hero-slogan {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 48px;
+    }
+
+    /* Thông tin liên hệ nhanh */
+    .hero-contacts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    .contact-item svg {
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       HERO AVATAR — Ảnh chân dung & hiệu ứng viền phát sáng
+    ============================================================ */
+    .hero-avatar {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 270px;
+      height: 270px;
+    }
+
+    /* Vầng sáng xoay tròn phía sau */
+    .avatar-glow {
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--accent), transparent 45%, var(--accent-dim) 75%, var(--accent));
+      opacity: 0.65;
+      filter: blur(12px);
+      animation: spin-slow 12s linear infinite;
+    }
+
+    /* Viền nét đứt công nghệ xoay ngược chiều */
+    .avatar-ring-dashed {
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 2px dashed rgba(0, 212, 170, 0.45);
+      animation: spin-slow 22s linear infinite reverse;
+    }
+
+    /* Khung tròn chứa ảnh thực tế */
+    .avatar-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid #161616;
+      box-shadow: 0 0 0 2px rgba(0, 212, 170, 0.5), 0 20px 40px rgba(0, 0, 0, 0.6);
+      background: #1e1e1e;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .avatar-wrapper:hover .avatar-img {
+      transform: scale(1.06);
+    }
+
+    /* Badge công nghệ nổi góc avatar */
+    .avatar-badge {
+      position: absolute;
+      bottom: 6px;
+      right: 2px;
+      background: rgba(22, 22, 22, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 212, 170, 0.4);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      animation: float-badge 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes float-badge {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    /* ============================================================
+       ABOUT SECTION
+    ============================================================ */
+    #about { background: var(--bg-secondary); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .about-card:hover {
+      border-color: rgba(0, 212, 170, 0.4);
+      box-shadow: var(--shadow);
+    }
+
+    .about-card-icon {
+      width: 48px; height: 48px;
+      background: rgba(0, 212, 170, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .about-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .about-card p, .about-card li {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .about-card ul { list-style: none; }
+    .about-card ul li {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .about-card ul li:last-child { border-bottom: none; }
+
+    .about-card ul li strong { color: var(--text-primary); }
+
+    /* ============================================================
+       SKILLS SECTION
+    ============================================================ */
+    #skills { background: var(--bg-primary); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .skill-group {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+    .skill-group:hover {
+      border-color: rgba(0, 212, 170, 0.4);
+      box-shadow: var(--shadow);
+      transform: translateY(-4px);
+    }
+
+    .skill-group-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .skill-group-icon {
+      width: 36px; height: 36px;
+      background: rgba(0, 212, 170, 0.12);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .skill-group h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* Skill tags */
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-tag {
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      background: rgba(0, 212, 170, 0.08);
+      border: 1px solid rgba(0, 212, 170, 0.2);
+      color: var(--accent);
+      transition: background var(--transition), transform var(--transition);
+      cursor: default;
+    }
+    .skill-tag:hover {
+      background: rgba(0, 212, 170, 0.18);
+      transform: translateY(-1px);
+    }
+
+    /* ============================================================
+       PROJECTS SECTION
+    ============================================================ */
+    #projects { background: var(--bg-secondary); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Dải màu trên cùng mỗi card */
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-dim));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .project-card:hover::before { transform: scaleX(1); }
+
+    .project-card:hover {
+      border-color: rgba(0, 212, 170, 0.4);
+      box-shadow: 0 12px 40px rgba(0, 212, 170, 0.1);
+      transform: translateY(-6px);
+    }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .project-icon {
+      width: 44px; height: 44px;
+      background: rgba(0, 212, 170, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .project-meta {
+      flex: 1;
+    }
+
+    .project-meta h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .project-role-time {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    .project-desc ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .project-desc ul li {
+      padding-left: 16px;
+      position: relative;
+    }
+    .project-desc ul li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    .tech-tag {
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.73rem;
+      font-weight: 500;
+      background: rgba(255,255,255,0.05);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      transition: color var(--transition), border-color var(--transition);
+    }
+    .project-card:hover .tech-tag {
+      color: var(--accent);
+      border-color: rgba(0, 212, 170, 0.25);
+    }
+
+    /* ============================================================
+       CONTACT SECTION
+    ============================================================ */
+    #contact { background: var(--bg-primary); }
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .contact-list-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .contact-list-item .icon-box {
+      width: 42px; height: 42px;
+      background: rgba(0, 212, 170, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+
+    .contact-list-item .info { flex: 1; }
+    .contact-list-item .info small { font-size: 0.75rem; color: var(--text-secondary); display: block; }
+    .contact-list-item .info span { font-size: 0.92rem; font-weight: 500; }
+
+    /* Form liên hệ nhanh */
+    .contact-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+    }
+
+    .contact-form h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 7px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 11px 15px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.12);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-secondary); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 56px 0 32px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .nav-logo { font-size: 1.2rem; margin-bottom: 14px; }
+
+    .footer-brand p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      max-width: 300px;
+      line-height: 1.8;
+    }
+
+    .footer-col h4 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 0.88rem; color: var(--text-secondary); }
+    .footer-links a:hover { color: var(--accent); }
+
+    .social-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .social-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      transition: border-color var(--transition), color var(--transition), transform var(--transition);
+    }
+    .social-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-bottom p { font-size: 0.82rem; color: var(--text-secondary); }
+    .footer-bottom span { color: var(--accent); }
+
+    /* Nút back to top */
+    #back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 44px; height: 44px;
+      background: var(--accent);
+      color: #111;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity var(--transition), transform var(--transition), background var(--transition);
+      z-index: 900;
+      box-shadow: 0 4px 16px rgba(0, 212, 170, 0.35);
+    }
+    #back-to-top.visible {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+    #back-to-top:hover { background: var(--accent-dim); }
+
+    /* ============================================================
+       RESPONSIVE — Tablet & Mobile
+    ============================================================ */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+      }
+
+      .hero-avatar {
+        display: flex;
+        justify-content: center;
+        order: -1;
+      }
+
+      .avatar-wrapper {
+        width: 220px;
+        height: 220px;
+      }
+
+      .hero-actions,
+      .hero-contacts {
+        justify-content: center;
+      }
+
+      .hero-slogan {
+        margin-inline: auto;
+      }
+
+      .about-grid { grid-template-columns: 1fr; gap: 24px; }
+
+      .contact-wrapper { grid-template-columns: 1fr; gap: 36px; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      section { padding: 72px 0; }
+
+      .nav-links {
+        position: fixed;
+        top: var(--header-h);
+        left: 0; right: 0;
+        background: rgba(17,17,17,0.98);
+        backdrop-filter: blur(16px);
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.4s ease;
+      }
+
+      .nav-links.open { max-height: 300px; }
+
+      .nav-links li { width: 100%; text-align: center; }
+      .nav-links a {
+        display: block;
+        padding: 16px;
+        font-size: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links a::after { display: none; }
+
+      .nav-toggle { display: flex; }
+
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       STICKY HEADER
+  ============================================================ -->
+  <header id="header">
+    <div class="container nav-inner">
+
+      <!-- Logo -->
+      <a href="#hero" class="nav-logo">HTĐ<span>.</span></a>
+
+      <!-- Navigation links -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" data-i18n="nav_about">About</a></li>
+        <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
+        <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+        <li><a href="CV_HoangTienDat.pdf" download="CV_HoangTienDat.pdf" target="_blank" style="color:var(--accent);font-weight:600" data-i18n="nav_cv">CV (PDF) 📥</a></li>
+      </ul>
+
+      <!-- Controls: Language Switcher & Hamburger Toggle -->
+      <div class="nav-controls">
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Language selection">
+          <button type="button" class="lang-btn active" data-lang="vi" title="Tiếng Việt">VI</button>
+          <span class="lang-divider">/</span>
+          <button type="button" class="lang-btn" data-lang="en" title="English">EN</button>
+        </div>
+
+        <!-- Hamburger toggle (mobile) -->
+        <button class="nav-toggle" id="navToggle" aria-label="Mở menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================================
+       SECTION 1: HERO
+  ============================================================ -->
+  <section id="hero">
+    <div class="container hero-inner">
+
+      <!-- Nội dung bên trái -->
+      <div class="hero-content">
+
+        <!-- Badge trạng thái -->
+        <div class="hero-badge reveal" data-i18n="hero_badge">
+          <span class="dot"></span>
+          Sẵn sàng thực tập ngay
+        </div>
+
+        <!-- Tên -->
+        <h1 class="hero-name reveal" data-i18n="hero_name">
+          HOÀNG<br />TIẾN <span class="accent-text">ĐẠT</span>
+        </h1>
+
+        <!-- Vị trí -->
+        <p class="hero-role reveal" data-i18n="hero_role">🎯 INTERN .NET DEVELOPER</p>
+
+        <!-- Slogan -->
+        <p class="hero-slogan reveal" data-i18n="hero_slogan">
+          Sinh viên chuyên ngành Công nghệ phần mềm tại <strong>HUFLIT</strong>,
+          đam mê xây dựng hệ thống web và E-commerce.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="hero-actions reveal">
+          <!-- Nút tải CV (PDF) trực tiếp -->
+          <a href="CV_HoangTienDat.pdf" download="CV_HoangTienDat.pdf" class="btn btn-primary" title="Tải file CV về máy" data-i18n="hero_btn_download">
+            <!-- Icon download -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Tải CV (PDF)
+          </a>
+          <!-- Nút xem trực tiếp trên trình duyệt -->
+          <a href="CV_HoangTienDat.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline" title="Mở xem CV trực tiếp" data-i18n="hero_btn_view">
+            <!-- Icon eye -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Xem CV
+          </a>
+          <a href="https://github.com/Dexter140405" target="_blank" rel="noopener" class="btn btn-outline" data-i18n="hero_btn_github">
+            <!-- GitHub icon -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            Xem GitHub
+          </a>
+        </div>
+
+        <!-- Thông tin liên hệ nhanh -->
+        <div class="hero-contacts reveal">
+
+          <div class="contact-item">
+            <!-- Icon calendar -->
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            12/04/2005
+          </div>
+
+          <div class="contact-item">
+            <!-- Icon phone -->
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.07 3.4 2 2 0 0 1 3 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16z"/></svg>
+            0963 470 341
+          </div>
+
+          <div class="contact-item">
+            <!-- Icon mail -->
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            dat67241@gmail.com
+          </div>
+
+          <div class="contact-item">
+            <!-- Icon location -->
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span data-i18n="hero_location">Q. Tân Phú, TP. HCM</span>
+          </div>
+
+        </div>
+      </div><!-- /hero-content -->
+
+      <!-- Avatar ảnh chân dung Hoàng Tiến Đạt -->
+      <div class="hero-avatar reveal">
+        <div class="avatar-wrapper">
+          <div class="avatar-glow"></div>
+          <div class="avatar-ring-dashed"></div>
+          <div class="avatar-frame">
+            <img src="avatar.jpg" alt="Hoàng Tiến Đạt - Intern .NET Developer" class="avatar-img" />
+          </div>
+          <div class="avatar-badge">
+            <span>⚡</span>
+            <span>.NET Core 8</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- /#hero -->
+
+  <!-- ============================================================
+       SECTION 2: ABOUT ME
+  ============================================================ -->
+  <section id="about">
+    <div class="container">
+
+      <span class="section-label reveal" data-i18n="about_label">/ About Me</span>
+      <h2 class="section-title reveal" data-i18n="about_title">Về <span>Bản Thân</span></h2>
+      <p class="section-desc reveal" data-i18n="about_desc">
+        Một lập trình viên trẻ đang trên hành trình xây dựng sự nghiệp trong lĩnh vực .NET Development.
+      </p>
+
+      <div class="about-grid">
+
+        <!-- Card Học vấn -->
+        <div class="about-card reveal">
+          <div class="about-card-icon">🎓</div>
+          <h3 data-i18n="about_edu_title">Học Vấn</h3>
+          <ul>
+            <li>
+              <span>
+                <strong data-i18n="about_edu_school_lbl">Trường</strong><br />
+                <span data-i18n="about_edu_school_val">Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT)</span>
+              </span>
+            </li>
+            <li>
+              <span>
+                <strong data-i18n="about_edu_faculty_lbl">Ngành</strong><br />
+                <span data-i18n="about_edu_faculty_val">Công nghệ thông tin</span>
+              </span>
+              <span style="color:var(--accent);font-size:0.8rem;white-space:nowrap">2023 – 2027</span>
+            </li>
+            <li>
+              <span>
+                <strong data-i18n="about_edu_major_lbl">Chuyên ngành</strong><br />
+                <span data-i18n="about_edu_major_val">Công nghệ phần mềm</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Card Mục tiêu -->
+        <div class="about-card reveal">
+          <div class="about-card-icon">🎯</div>
+          <h3 data-i18n="about_obj_title">Mục Tiêu Nghề Nghiệp</h3>
+          <p data-i18n="about_obj_p1">
+            Nền tảng vững chắc về <strong>C#, ASP.NET Core, ASP.NET MVC</strong> và <strong>SQL Server</strong>.
+            Có kinh nghiệm tự xây dựng các hệ thống E-commerce và ứng dụng quản lý thực tế.
+          </p>
+          <br />
+          <p data-i18n="about_obj_p2">
+            Mong muốn ứng tuyển vị trí <strong style="color:var(--accent)">Thực tập sinh .NET Developer</strong>
+            để học hỏi quy trình chuẩn, rèn luyện kỹ năng thực chiến và cống hiến để trở thành
+            lập trình viên chính thức.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section><!-- /#about -->
+
+  <!-- ============================================================
+       SECTION 3: SKILLS
+  ============================================================ -->
+  <section id="skills">
+    <div class="container">
+
+      <span class="section-label reveal" data-i18n="skills_label">/ Skills</span>
+      <h2 class="section-title reveal" data-i18n="skills_title">Kỹ Năng <span>Chuyên Môn</span></h2>
+      <p class="section-desc reveal" data-i18n="skills_desc">
+        Các công nghệ và công cụ tôi sử dụng để xây dựng sản phẩm.
+      </p>
+
+      <div class="skills-grid">
+
+        <!-- Backend & Frameworks -->
+        <div class="skill-group reveal">
+          <div class="skill-group-header">
+            <div class="skill-group-icon">⚙️</div>
+            <h3 data-i18n="skills_grp_backend">Backend &amp; Frameworks</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">C#</span>
+            <span class="skill-tag">.NET Core 8</span>
+            <span class="skill-tag">ASP.NET Core MVC</span>
+            <span class="skill-tag">Entity Framework Core 8</span>
+            <span class="skill-tag">RESTful API</span>
+          </div>
+        </div>
+
+        <!-- Database & Query -->
+        <div class="skill-group reveal">
+          <div class="skill-group-header">
+            <div class="skill-group-icon">🗄️</div>
+            <h3 data-i18n="skills_grp_db">Database &amp; Query</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">SQL Server</span>
+            <span class="skill-tag">T-SQL</span>
+            <span class="skill-tag">Stored Procedures</span>
+            <span class="skill-tag">Triggers</span>
+            <span class="skill-tag">Oracle Database</span>
+            <span class="skill-tag">PL/SQL</span>
+            <span class="skill-tag">Transaction</span>
+          </div>
+        </div>
+
+        <!-- Front-End -->
+        <div class="skill-group reveal">
+          <div class="skill-group-header">
+            <div class="skill-group-icon">🎨</div>
+            <h3 data-i18n="skills_grp_fe">Front-End</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Razor Views</span>
+          </div>
+        </div>
+
+        <!-- Tools & Management -->
+        <div class="skill-group reveal">
+          <div class="skill-group-header">
+            <div class="skill-group-icon">🛠️</div>
+            <h3 data-i18n="skills_grp_tools">Tools &amp; Management</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Branching / Commit</span>
+            <span class="skill-tag">Postman</span>
+            <span class="skill-tag">Visual Studio 2022</span>
+            <span class="skill-tag">SSMS</span>
+          </div>
+        </div>
+
+        <!-- Testing & Architecture -->
+        <div class="skill-group reveal">
+          <div class="skill-group-header">
+            <div class="skill-group-icon">🧪</div>
+            <h3 data-i18n="skills_grp_test_arch">Testing &amp; Architecture</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Selenium WebDriver</span>
+            <span class="skill-tag">Manual Testing</span>
+            <span class="skill-tag">Test Cases</span>
+            <span class="skill-tag">Repository Pattern</span>
+            <span class="skill-tag">Unit of Work</span>
+            <span class="skill-tag">Factory Method</span>
+            <span class="skill-tag">Singleton</span>
+            <span class="skill-tag">Strategy</span>
+          </div>
+        </div>
+
+        <!-- Ngoại ngữ & Soft Skills -->
+        <div class="skill-group reveal">
+          <div class="skill-group-header">
+            <div class="skill-group-icon">🌐</div>
+            <h3 data-i18n="skills_grp_soft">Ngoại ngữ &amp; Kỹ Năng Khác</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag" data-i18n="skills_english">Tiếng Anh (Đọc tài liệu kỹ thuật)</span>
+            <span class="skill-tag" data-i18n="skills_teamwork">Làm việc nhóm</span>
+            <span class="skill-tag" data-i18n="skills_problem_solving">Giải quyết vấn đề</span>
+            <span class="skill-tag" data-i18n="skills_time_mgmt">Quản lý thời gian</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section><!-- /#skills -->
+
+  <!-- ============================================================
+       SECTION 4: PROJECTS
+  ============================================================ -->
+  <section id="projects">
+    <div class="container">
+
+      <span class="section-label reveal" data-i18n="projects_label">/ Projects</span>
+      <h2 class="section-title reveal" data-i18n="projects_title">Dự Án <span>Thực Tế</span></h2>
+      <p class="section-desc reveal" data-i18n="projects_desc">
+        Các dự án tự xây dựng, áp dụng kiến trúc và quy trình phát triển phần mềm chuyên nghiệp.
+      </p>
+
+      <div class="projects-grid">
+
+        <!-- ===== Dự án 1: Coco Cookies ===== -->
+        <div class="project-card reveal">
+          <div class="project-header">
+            <div class="project-icon">🍪</div>
+            <div class="project-meta">
+              <h3 data-i18n="p1_title">Website Tiệm Bánh (Coco Cookies)</h3>
+              <span class="project-role-time" data-i18n="p1_role">Full-stack Developer &nbsp;·&nbsp; 04/2026 – 06/2026</span>
+            </div>
+          </div>
+
+          <div class="project-desc">
+            <ul>
+              <li data-i18n="p1_d1">Phân tích yêu cầu, thiết kế UML và ERD cho hệ thống tiệm bánh.</li>
+              <li data-i18n="p1_d2">Lập trình T-SQL, Stored Procedures quản lý kho và đơn hàng.</li>
+              <li data-i18n="p1_d3">Xây dựng luồng xử lý đơn hàng, tùy chỉnh bánh và quy tắc tồn kho.</li>
+            </ul>
+          </div>
+
+          <div class="project-tech">
+            <span class="tech-tag">C#</span>
+            <span class="tech-tag">ASP.NET Core MVC</span>
+            <span class="tech-tag">SQL Server</span>
+            <span class="tech-tag">T-SQL</span>
+            <span class="tech-tag">EF Core</span>
+            <span class="tech-tag">Razor Views</span>
+          </div>
+        </div>
+
+        <!-- ===== Dự án 2: Maison Luxe ===== -->
+        <div class="project-card reveal">
+          <div class="project-header">
+            <div class="project-icon">👗</div>
+            <div class="project-meta">
+              <h3 data-i18n="p2_title">Maison Luxe (E-commerce Fashion Shop)</h3>
+              <span class="project-role-time" data-i18n="p2_role">.NET Developer &nbsp;·&nbsp; 02/2026 – 04/2026</span>
+            </div>
+          </div>
+
+          <div class="project-desc">
+            <ul>
+              <li data-i18n="p2_d1">Xây dựng Controllers &amp; Business Services cho quản lý sản phẩm, giỏ hàng, báo cáo.</li>
+              <li data-i18n="p2_d2">Tối ưu truy vấn LINQ, giảm thiểu N+1 query.</li>
+              <li data-i18n="p2_d3">Áp dụng Design Patterns: Repository, Unit of Work, Factory, Singleton, Strategy.</li>
+            </ul>
+          </div>
+
+          <div class="project-tech">
+            <span class="tech-tag">C#</span>
+            <span class="tech-tag">ASP.NET Core 8 MVC</span>
+            <span class="tech-tag">EF Core 8</span>
+            <span class="tech-tag">SQL Server</span>
+            <span class="tech-tag">HTML5/CSS3</span>
+          </div>
+        </div>
+
+        <!-- ===== Dự án 3: Ký túc xá ===== -->
+        <div class="project-card reveal">
+          <div class="project-header">
+            <div class="project-icon">🏢</div>
+            <div class="project-meta">
+              <h3 data-i18n="p3_title">Hệ thống Quản lý Ký túc xá</h3>
+              <span class="project-role-time" data-i18n="p3_role">Full-stack Developer &nbsp;·&nbsp; 02/2026 – 04/2026</span>
+            </div>
+          </div>
+
+          <div class="project-desc">
+            <ul>
+              <li data-i18n="p3_d1">Thiết kế ERD, viết PL/SQL, Stored Procedures và Triggers trên Oracle.</li>
+              <li data-i18n="p3_d2">Xây dựng Controllers xử lý đăng ký nội trú, xếp phòng, tính hóa đơn.</li>
+              <li data-i18n="p3_d3">Đảm bảo toàn vẹn dữ liệu bằng Transaction và ràng buộc DB.</li>
+            </ul>
+          </div>
+
+          <div class="project-tech">
+            <span class="tech-tag">C#</span>
+            <span class="tech-tag">ASP.NET MVC</span>
+            <span class="tech-tag">Oracle Database</span>
+            <span class="tech-tag">PL/SQL</span>
+            <span class="tech-tag">Bootstrap</span>
+          </div>
+        </div>
+
+        <!-- ===== Dự án 4: Thư viện ===== -->
+        <div class="project-card reveal">
+          <div class="project-header">
+            <div class="project-icon">📚</div>
+            <div class="project-meta">
+              <h3 data-i18n="p4_title">Hệ thống Quản lý Thư viện</h3>
+              <span class="project-role-time" data-i18n="p4_role">Backend / Full-stack Developer &nbsp;·&nbsp; 10/2025 – 12/2025</span>
+            </div>
+          </div>
+
+          <div class="project-desc">
+            <ul>
+              <li data-i18n="p4_d1">Phát triển API và giao diện bằng Razor Views.</li>
+              <li data-i18n="p4_d2">Quản lý sách, user, luồng mượn/trả sách toàn diện.</li>
+              <li data-i18n="p4_d3">Phối hợp với PM &amp; Tester; quản lý source code qua Git (branching, merge).</li>
+            </ul>
+          </div>
+
+          <div class="project-tech">
+            <span class="tech-tag">C#</span>
+            <span class="tech-tag">ASP.NET Core</span>
+            <span class="tech-tag">Razor Views</span>
+            <span class="tech-tag">SQL Server</span>
+            <span class="tech-tag">Git</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section><!-- /#projects -->
+
+  <!-- ============================================================
+       SECTION 5: CONTACT
+  ============================================================ -->
+  <section id="contact">
+    <div class="container">
+
+      <span class="section-label reveal" data-i18n="contact_label">/ Contact</span>
+      <h2 class="section-title reveal" data-i18n="contact_title">Liên <span>Hệ</span></h2>
+
+      <div class="contact-wrapper">
+
+        <!-- Thông tin liên hệ -->
+        <div class="contact-info reveal">
+          <p data-i18n="contact_desc">
+            Tôi đang tích cực tìm kiếm cơ hội thực tập .NET Developer. Nếu bạn có vị trí phù hợp
+            hoặc muốn trao đổi thêm, đừng ngại liên hệ nhé!
+          </p>
+
+          <div class="contact-list">
+
+            <div class="contact-list-item">
+              <div class="icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.07 3.4 2 2 0 0 1 3 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16z"/></svg>
+              </div>
+              <div class="info">
+                <small data-i18n="contact_phone_lbl">Số điện thoại</small>
+                <span>0963 470 341</span>
+              </div>
+            </div>
+
+            <div class="contact-list-item">
+              <div class="icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div class="info">
+                <small data-i18n="contact_email_lbl">Email</small>
+                <span><a href="mailto:dat67241@gmail.com">dat67241@gmail.com</a></span>
+              </div>
+            </div>
+
+            <div class="contact-list-item">
+              <div class="icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              </div>
+              <div class="info">
+                <small data-i18n="contact_github_lbl">GitHub</small>
+                <span><a href="https://github.com/Dexter140405" target="_blank" rel="noopener">github.com/Dexter140405</a></span>
+              </div>
+            </div>
+
+            <div class="contact-list-item">
+              <div class="icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </div>
+              <div class="info">
+                <small data-i18n="contact_linkedin_lbl">LinkedIn</small>
+                <span><a href="https://linkedin.com/in/hoàng-tiến-đạt-4293a7435" target="_blank" rel="noopener">Hoàng Tiến Đạt</a></span>
+              </div>
+            </div>
+
+            <div class="contact-list-item">
+              <div class="icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="info">
+                <small data-i18n="contact_location_lbl">Địa chỉ</small>
+                <span data-i18n="contact_location_val">Q. Tân Phú, TP. Hồ Chí Minh</span>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /contact-info -->
+
+        <!-- Form liên hệ -->
+        <div class="contact-form reveal">
+          <h3 data-i18n="contact_form_title">Gửi tin nhắn cho tôi 💬</h3>
+
+          <form id="contactForm" onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+              <label for="name" data-i18n="contact_form_name_lbl">Họ và tên</label>
+              <input type="text" id="name" name="name" placeholder="Nguyễn Văn A" data-i18n-placeholder="contact_form_name_placeholder" required />
+            </div>
+            <div class="form-group">
+              <label for="email" data-i18n="contact_form_email_lbl">Email của bạn</label>
+              <input type="email" id="email" name="email" placeholder="example@email.com" data-i18n-placeholder="contact_form_email_placeholder" required />
+            </div>
+            <div class="form-group">
+              <label for="message" data-i18n="contact_form_msg_lbl">Nội dung</label>
+              <textarea id="message" name="message" rows="5" placeholder="Xin chào, tôi muốn trao đổi về..." data-i18n-placeholder="contact_form_msg_placeholder" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center" data-i18n="contact_form_btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Gửi Tin Nhắn
+            </button>
+          </form>
+
+          <!-- Thông báo gửi thành công (ẩn mặc định) -->
+          <div id="formSuccess" style="display:none;margin-top:16px;padding:14px 18px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:var(--radius-sm);color:var(--accent);font-size:0.88rem;text-align:center" data-i18n="contact_form_success">
+            ✅ Cảm ơn bạn! Tôi sẽ phản hồi sớm nhất có thể.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section><!-- /#contact -->
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="nav-logo" style="font-size:1.2rem;margin-bottom:14px">HTĐ<span style="color:var(--accent)">.</span></div>
+          <p data-i18n="footer_desc">
+            Sinh viên .NET Developer đam mê xây dựng hệ thống web và E-commerce.
+            Sở thích: đọc sách công nghệ, chạy bộ, du lịch trải nghiệm và khám phá hệ sinh thái .NET.
+          </p>
+
+          <!-- Social links -->
+          <div class="social-links">
+            <!-- GitHub -->
+            <a href="https://github.com/Dexter140405" target="_blank" rel="noopener" class="social-btn" title="GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com/in/hoàng-tiến-đạt-4293a7435" target="_blank" rel="noopener" class="social-btn" title="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <!-- Email -->
+            <a href="mailto:dat67241@gmail.com" class="social-btn" title="Email">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick links -->
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav_title">Điều Hướng</h4>
+          <ul class="footer-links">
+            <li><a href="#hero" data-i18n="footer_nav_home">Home</a></li>
+            <li><a href="#about" data-i18n="nav_about">About</a></li>
+            <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
+            <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
+            <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+            <li><a href="CV_HoangTienDat.pdf" download="CV_HoangTienDat.pdf" target="_blank" style="color:var(--accent)" data-i18n="footer_cv_link">Tải CV (PDF) 📥</a></li>
+          </ul>
+        </div>
+
+        <!-- Sở thích -->
+        <div class="footer-col">
+          <h4 data-i18n="footer_hobbies_title">Sở Thích</h4>
+          <ul class="footer-links">
+            <li><a href="#" data-i18n="footer_h1">📖 Đọc sách công nghệ</a></li>
+            <li><a href="#" data-i18n="footer_h2">🏃 Chạy bộ</a></li>
+            <li><a href="#" data-i18n="footer_h3">✈️ Du lịch trải nghiệm</a></li>
+            <li><a href="#" data-i18n="footer_h4">🔷 Hệ sinh thái .NET</a></li>
+          </ul>
+        </div>
+
+      </div><!-- /footer-grid -->
+
+      <!-- Footer bottom -->
+      <div class="footer-bottom">
+        <p data-i18n="footer_rights">© 2026 <span>Hoang Tien Dat</span>. All rights reserved.</p>
+        <p data-i18n="footer_built_with">Được xây dựng với <span>♥</span> và <span>.NET</span></p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Nút Back to Top -->
+  <button id="back-to-top" title="Về đầu trang" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    /* ============================================================
+       BILINGUAL DICTIONARY (VI / EN)
+    ============================================================ */
+    const i18n = {
+      vi: {
+        page_title: "Hoàng Tiến Đạt | Intern .NET Developer",
+        nav_about: "About",
+        nav_skills: "Skills",
+        nav_projects: "Projects",
+        nav_contact: "Contact",
+        nav_cv: "CV (PDF) 📥",
+
+        hero_badge: `<span class="dot"></span> Sẵn sàng thực tập ngay`,
+        hero_name: `HOÀNG<br />TIẾN <span class="accent-text">ĐẠT</span>`,
+        hero_role: "🎯 INTERN .NET DEVELOPER",
+        hero_slogan: `Sinh viên chuyên ngành Công nghệ phần mềm tại <strong>HUFLIT</strong>, đam mê xây dựng hệ thống web và E-commerce.`,
+        hero_btn_download: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Tải CV (PDF)`,
+        hero_btn_view: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Xem CV`,
+        hero_btn_github: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> Xem GitHub`,
+        hero_location: "Q. Tân Phú, TP. HCM",
+
+        about_label: "/ About Me",
+        about_title: `Về <span>Bản Thân</span>`,
+        about_desc: "Một lập trình viên trẻ đang trên hành trình xây dựng sự nghiệp trong lĩnh vực .NET Development.",
+        about_edu_title: "Học Vấn",
+        about_edu_school_lbl: "Trường",
+        about_edu_school_val: "Đại học Ngoại ngữ - Tin học TP.HCM (HUFLIT)",
+        about_edu_faculty_lbl: "Ngành",
+        about_edu_faculty_val: "Công nghệ thông tin",
+        about_edu_major_lbl: "Chuyên ngành",
+        about_edu_major_val: "Công nghệ phần mềm",
+        about_obj_title: "Mục Tiêu Nghề Nghiệp",
+        about_obj_p1: `Nền tảng vững chắc về <strong>C#, ASP.NET Core, ASP.NET MVC</strong> và <strong>SQL Server</strong>. Có kinh nghiệm tự xây dựng các hệ thống E-commerce và ứng dụng quản lý thực tế.`,
+        about_obj_p2: `Mong muốn ứng tuyển vị trí <strong style="color:var(--accent)">Thực tập sinh .NET Developer</strong> để học hỏi quy trình chuẩn, rèn luyện kỹ năng thực chiến và cống hiến để trở thành lập trình viên chính thức.`,
+
+        skills_label: "/ Skills",
+        skills_title: `Kỹ Năng <span>Chuyên Môn</span>`,
+        skills_desc: "Các công nghệ và công cụ tôi sử dụng để xây dựng sản phẩm.",
+        skills_grp_backend: "Backend & Frameworks",
+        skills_grp_db: "Database & Query",
+        skills_grp_fe: "Front-End",
+        skills_grp_tools: "Tools & Management",
+        skills_grp_test_arch: "Testing & Architecture",
+        skills_grp_soft: "Ngoại ngữ & Kỹ Năng Khác",
+        skills_english: "Tiếng Anh (Đọc tài liệu kỹ thuật)",
+        skills_teamwork: "Làm việc nhóm",
+        skills_problem_solving: "Giải quyết vấn đề",
+        skills_time_mgmt: "Quản lý thời gian",
+
+        projects_label: "/ Projects",
+        projects_title: `Dự Án <span>Thực Tế</span>`,
+        projects_desc: "Các dự án tự xây dựng, áp dụng kiến trúc và quy trình phát triển phần mềm chuyên nghiệp.",
+        p1_title: "Website Tiệm Bánh (Coco Cookies)",
+        p1_role: "Full-stack Developer · 04/2026 – 06/2026",
+        p1_d1: "Phân tích yêu cầu, thiết kế UML và ERD cho hệ thống tiệm bánh.",
+        p1_d2: "Lập trình T-SQL, Stored Procedures quản lý kho và đơn hàng.",
+        p1_d3: "Xây dựng luồng xử lý đơn hàng, tùy chỉnh bánh và quy tắc tồn kho.",
+
+        p2_title: "Maison Luxe (E-commerce Fashion Shop)",
+        p2_role: ".NET Developer · 02/2026 – 04/2026",
+        p2_d1: "Xây dựng Controllers & Business Services cho quản lý sản phẩm, giỏ hàng, báo cáo.",
+        p2_d2: "Tối ưu truy vấn LINQ, giảm thiểu N+1 query.",
+        p2_d3: "Áp dụng Design Patterns: Repository, Unit of Work, Factory, Singleton, Strategy.",
+
+        p3_title: "Hệ thống Quản lý Ký túc xá",
+        p3_role: "Full-stack Developer · 02/2026 – 04/2026",
+        p3_d1: "Thiết kế ERD, viết PL/SQL, Stored Procedures và Triggers trên Oracle.",
+        p3_d2: "Xây dựng Controllers xử lý đăng ký nội trú, xếp phòng, tính hóa đơn.",
+        p3_d3: "Đảm bảo toàn vẹn dữ liệu bằng Transaction và ràng buộc DB.",
+
+        p4_title: "Hệ thống Quản lý Thư viện",
+        p4_role: "Backend / Full-stack Developer · 10/2025 – 12/2025",
+        p4_d1: "Phát triển API và giao diện bằng Razor Views.",
+        p4_d2: "Quản lý sách, user, luồng mượn/trả sách toàn diện.",
+        p4_d3: "Phối hợp với PM & Tester; quản lý source code qua Git (branching, merge).",
+
+        contact_label: "/ Contact",
+        contact_title: `Liên <span>Hệ</span>`,
+        contact_desc: "Tôi đang tích cực tìm kiếm cơ hội thực tập .NET Developer. Nếu bạn có vị trí phù hợp hoặc muốn trao đổi thêm, đừng ngại liên hệ nhé!",
+        contact_phone_lbl: "Số điện thoại",
+        contact_email_lbl: "Email",
+        contact_github_lbl: "GitHub",
+        contact_linkedin_lbl: "LinkedIn",
+        contact_location_lbl: "Địa chỉ",
+        contact_location_val: "Q. Tân Phú, TP. Hồ Chí Minh",
+        contact_form_title: "Gửi tin nhắn cho tôi 💬",
+        contact_form_name_lbl: "Họ và tên",
+        contact_form_name_placeholder: "Nguyễn Văn A",
+        contact_form_email_lbl: "Email của bạn",
+        contact_form_email_placeholder: "example@email.com",
+        contact_form_msg_lbl: "Nội dung",
+        contact_form_msg_placeholder: "Xin chào, tôi muốn trao đổi về...",
+        contact_form_btn: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Gửi Tin Nhắn`,
+        contact_form_sending: "Đang gửi...",
+        contact_form_success: "✅ Cảm ơn bạn! Tôi sẽ phản hồi sớm nhất có thể.",
+
+        footer_desc: "Sinh viên .NET Developer đam mê xây dựng hệ thống web và E-commerce. Sở thích: đọc sách công nghệ, chạy bộ, du lịch trải nghiệm và khám phá hệ sinh thái .NET.",
+        footer_nav_title: "Điều Hướng",
+        footer_nav_home: "Home",
+        footer_cv_link: "Tải CV (PDF) 📥",
+        footer_hobbies_title: "Sở Thích",
+        footer_h1: "📖 Đọc sách công nghệ",
+        footer_h2: "🏃 Chạy bộ",
+        footer_h3: "✈️ Du lịch trải nghiệm",
+        footer_h4: "🔷 Hệ sinh thái .NET",
+        footer_rights: `© 2026 <span>Hoang Tien Dat</span>. All rights reserved.`,
+        footer_built_with: `Được xây dựng với <span>♥</span> và <span>.NET</span>`
+      },
+
+      en: {
+        page_title: "Hoang Tien Dat | Intern .NET Developer",
+        nav_about: "About",
+        nav_skills: "Skills",
+        nav_projects: "Projects",
+        nav_contact: "Contact",
+        nav_cv: "CV (PDF) 📥",
+
+        hero_badge: `<span class="dot"></span> Available for Internship`,
+        hero_name: `HOANG<br />TIEN <span class="accent-text">DAT</span>`,
+        hero_role: "🎯 INTERN .NET DEVELOPER",
+        hero_slogan: `Software Engineering student at <strong>HUFLIT</strong>, passionate about building robust web systems and E-commerce platforms.`,
+        hero_btn_download: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download CV (PDF)`,
+        hero_btn_view: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> View CV`,
+        hero_btn_github: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> View GitHub`,
+        hero_location: "Tan Phu Dist., HCMC",
+
+        about_label: "/ About Me",
+        about_title: `About <span>Me</span>`,
+        about_desc: "An aspiring software engineer building a solid career path in .NET development.",
+        about_edu_title: "Education",
+        about_edu_school_lbl: "University",
+        about_edu_school_val: "HCMC University of Foreign Languages - Information Technology (HUFLIT)",
+        about_edu_faculty_lbl: "Faculty",
+        about_edu_faculty_val: "Information Technology",
+        about_edu_major_lbl: "Specialization",
+        about_edu_major_val: "Software Engineering",
+        about_obj_title: "Career Objective",
+        about_obj_p1: `Solid technical foundation in <strong>C#, ASP.NET Core, ASP.NET MVC</strong>, and <strong>SQL Server</strong>. Practical experience building full-stack E-commerce systems and enterprise-grade management apps.`,
+        about_obj_p2: `Seeking a <strong style="color:var(--accent)">.NET Developer Intern</strong> role to learn standardized engineering workflows, sharpen hands-on production skills, and contribute toward becoming a full-time software engineer.`,
+
+        skills_label: "/ Skills",
+        skills_title: `Technical <span>Skills</span>`,
+        skills_desc: "Core technologies, architectures, and tools I use to build scalable products.",
+        skills_grp_backend: "Backend & Frameworks",
+        skills_grp_db: "Database & Query",
+        skills_grp_fe: "Front-End",
+        skills_grp_tools: "Tools & Management",
+        skills_grp_test_arch: "Testing & Architecture",
+        skills_grp_soft: "Languages & Soft Skills",
+        skills_english: "English (Proficient in Technical Docs)",
+        skills_teamwork: "Teamwork",
+        skills_problem_solving: "Problem Solving",
+        skills_time_mgmt: "Time Management",
+
+        projects_label: "/ Projects",
+        projects_title: `Featured <span>Projects</span>`,
+        projects_desc: "Hands-on systems built with clean architecture, high maintainability, and professional practices.",
+        p1_title: "Bakery Shop Website (Coco Cookies)",
+        p1_role: "Full-stack Developer · 04/2026 – 06/2026",
+        p1_d1: "Conducted requirements analysis, created UML diagrams and relational ERD for bakery operations.",
+        p1_d2: "Authored optimized T-SQL scripts and Stored Procedures for inventory and order management.",
+        p1_d3: "Engineered full-stack checkout pipeline, custom cake builder, and stock reservation rules.",
+
+        p2_title: "Maison Luxe (E-commerce Fashion Shop)",
+        p2_role: ".NET Developer · 02/2026 – 04/2026",
+        p2_d1: "Developed Controllers & Business Services for product catalog, shopping cart, and revenue reporting.",
+        p2_d2: "Optimized LINQ queries to eliminate N+1 bottlenecks and reduce database latency.",
+        p2_d3: "Implemented Design Patterns: Repository, Unit of Work, Factory Method, Singleton, and Strategy.",
+
+        p3_title: "Dormitory Management System",
+        p3_role: "Full-stack Developer · 02/2026 – 04/2026",
+        p3_d1: "Designed normalized ERD, wrote PL/SQL procedures, triggers, and transaction controls on Oracle Database.",
+        p3_d2: "Engineered MVC controllers to automate student boarding applications, room placement, and utility billing.",
+        p3_d3: "Guaranteed transactional ACID safety and strict relational database integrity rules.",
+
+        p4_title: "Library Management System",
+        p4_role: "Backend / Full-stack Developer · 10/2025 – 12/2025",
+        p4_d1: "Developed REST APIs and responsive server-rendered user interfaces with Razor Views.",
+        p4_d2: "Managed catalog categorization, librarian/patron access controls, and borrow/return tracking.",
+        p4_d3: "Collaborated closely with PM & QA; managed source code branching, commits, and pull requests via Git.",
+
+        contact_label: "/ Contact",
+        contact_title: `Get In <span>Touch</span>`,
+        contact_desc: "I am actively seeking an internship opportunity as a .NET Developer. Feel free to reach out if you have an opening or would like to connect!",
+        contact_phone_lbl: "Phone Number",
+        contact_email_lbl: "Email",
+        contact_github_lbl: "GitHub",
+        contact_linkedin_lbl: "LinkedIn",
+        contact_location_lbl: "Location",
+        contact_location_val: "Tan Phu Dist., Ho Chi Minh City",
+        contact_form_title: "Send me a message 💬",
+        contact_form_name_lbl: "Full Name",
+        contact_form_name_placeholder: "John Doe",
+        contact_form_email_lbl: "Your Email",
+        contact_form_email_placeholder: "example@email.com",
+        contact_form_msg_lbl: "Message",
+        contact_form_msg_placeholder: "Hi, I would like to discuss...",
+        contact_form_btn: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message`,
+        contact_form_sending: "Sending...",
+        contact_form_success: "✅ Thank you! I will get back to you as soon as possible.",
+
+        footer_desc: ".NET Developer student passionate about building web systems and E-commerce. Hobbies: tech books, running, traveling, and exploring the .NET ecosystem.",
+        footer_nav_title: "Navigation",
+        footer_nav_home: "Home",
+        footer_cv_link: "Download CV (PDF) 📥",
+        footer_hobbies_title: "Hobbies",
+        footer_h1: "📖 Tech reading",
+        footer_h2: "🏃 Running",
+        footer_h3: "✈️ Traveling",
+        footer_h4: "🔷 .NET Ecosystem",
+        footer_rights: `© 2026 <span>Hoang Tien Dat</span>. All rights reserved.`,
+        footer_built_with: `Built with <span>♥</span> and <span>.NET</span>`
+      }
+    };
+
+    let currentLang = 'vi';
+
+    /* ----------------------------------------------------------------
+       LANGUAGE SWITCHING ENGINE
+    ---------------------------------------------------------------- */
+    function setLanguage(lang) {
+      if (!i18n[lang]) return;
+      currentLang = lang;
+      const t = i18n[lang];
+
+      // Update HTML lang and Page title
+      document.documentElement.lang = lang;
+      document.title = t.page_title;
+
+      // Update elements with data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) {
+          el.innerHTML = t[key];
+        }
+      });
+
+      // Update input placeholders with data-i18n-placeholder
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key] !== undefined) {
+          el.setAttribute('placeholder', t[key]);
+        }
+      });
+
+      // Update active state on buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+
+      // Persist selection
+      localStorage.setItem('portfolio_lang', lang);
+    }
+
+    // Attach click events to language buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const selectedLang = btn.getAttribute('data-lang');
+        setLanguage(selectedLang);
+      });
+    });
+
+    // Initialize saved language or default to Vietnamese
+    const savedLang = localStorage.getItem('portfolio_lang') || 'vi';
+    setLanguage(savedLang);
+
+
+    /* ----------------------------------------------------------------
+       1. STICKY HEADER — thêm class .scrolled khi cuộn xuống
+    ---------------------------------------------------------------- */
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+
+    /* ----------------------------------------------------------------
+       2. MOBILE NAV — hamburger toggle
+    ---------------------------------------------------------------- */
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+
+    // Đóng menu khi click vào một link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+
+
+    /* ----------------------------------------------------------------
+       3. ACTIVE NAV LINK — highlight link theo section đang hiển thị
+    ---------------------------------------------------------------- */
+    const sections = document.querySelectorAll('section[id]');
+    const navItems  = document.querySelectorAll('.nav-links a');
+
+    function updateActiveNav() {
+      let currentSection = '';
+      const scrollY = window.scrollY;
+
+      sections.forEach(section => {
+        if (scrollY >= section.offsetTop - 100) {
+          currentSection = section.id;
+        }
+      });
+
+      navItems.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    updateActiveNav();
+
+
+    /* ----------------------------------------------------------------
+       4. SCROLL REVEAL — hiệu ứng xuất hiện khi cuộn
+    ---------------------------------------------------------------- */
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const delay = Array.from(revealElements).indexOf(entry.target) % 4 * 80;
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, delay);
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+
+    /* ----------------------------------------------------------------
+       5. BACK TO TOP — hiện nút khi cuộn xuống > 400px
+    ---------------------------------------------------------------- */
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+
+
+    /* ----------------------------------------------------------------
+       6. CONTACT FORM — xử lý submit với hỗ trợ song ngữ
+    ---------------------------------------------------------------- */
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const form    = document.getElementById('contactForm');
+      const success = document.getElementById('formSuccess');
+      const btn     = form.querySelector('button[type="submit"]');
+      const t       = i18n[currentLang] || i18n.vi;
+
+      // Trạng thái loading
+      btn.disabled    = true;
+      btn.textContent = t.contact_form_sending;
+
+      setTimeout(() => {
+        form.reset();
+        btn.disabled  = false;
+        btn.innerHTML = t.contact_form_btn;
+        success.style.display = 'block';
+
+        // Ẩn thông báo sau 5 giây
+        setTimeout(() => { success.style.display = 'none'; }, 5000);
+      }, 1200);
+    }
+
+
+    /* ----------------------------------------------------------------
+       7. SMOOTH SCROLL OFFSET — bù offset header khi click nav link
+    ---------------------------------------------------------------- */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const target = document.querySelector(targetId);
+        if (!target) return;
+        e.preventDefault();
+
+        const headerHeight = document.getElementById('header').offsetHeight;
+        const targetTop    = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+
+        window.scrollTo({ top: targetTop, behavior: 'smooth' });
+      });
+    });
+
+  </script>
+
+</body>
+</html>
